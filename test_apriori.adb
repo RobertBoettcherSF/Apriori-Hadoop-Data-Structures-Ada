@@ -3,10 +3,7 @@
 
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Containers; use Ada.Containers;
-with Ada.Unchecked_Deallocation;
 with Apriori_Algorithm; use Apriori_Algorithm;
-
-procedure Free is new Ada.Unchecked_Deallocation(Itemset, Itemset_Access);
 
 procedure Test_Apriori is
 
@@ -31,7 +28,7 @@ procedure Test_Apriori is
       
       -- Clean up
       for I of Itemsets loop
-         Free(I);
+         Free_Itemset(I);
       end loop;
       
       Put_Line("Test 1: PASSED");
@@ -60,7 +57,7 @@ procedure Test_Apriori is
       
       -- Clean up
       for C of Local_Candidates loop
-         Free(C);
+         Free_Itemset(C);
       end loop;
    end Test_Mapper;
 
@@ -101,17 +98,17 @@ procedure Test_Apriori is
       
       -- Clean up
       for C of Candidates_L1 loop
-         Free(C);
+         Free_Itemset(C);
       end loop;
       Candidates_L1.Clear;
       
       for C of Candidates_L2 loop
-         Free(C);
+         Free_Itemset(C);
       end loop;
       Candidates_L2.Clear;
       
       for C of Candidates_L3 loop
-         Free(C);
+         Free_Itemset(C);
       end loop;
       Candidates_L3.Clear;
    end Test_Generate_Candidates;
@@ -136,7 +133,7 @@ procedure Test_Apriori is
       
       -- Clean up
       for C of Candidates loop
-         Free(C);
+         Free_Itemset(C);
       end loop;
    end Test_Count_Support;
 
@@ -163,7 +160,7 @@ procedure Test_Apriori is
       
       -- Clean up
       for C of Candidates loop
-         Free(C);
+         Free_Itemset(C);
       end loop;
    end Test_Prune_Candidates;
 
@@ -190,7 +187,7 @@ procedure Test_Apriori is
       
       -- Clean up
       for C of Candidates loop
-         Free(C);
+         Free_Itemset(C);
       end loop;
    end Test_Reducer_Combiner;
 

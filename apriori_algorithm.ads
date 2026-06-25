@@ -12,6 +12,9 @@ package Apriori_Algorithm is
    type Transaction is array (Positive range <>) of Item;
    type Itemset_Access is access Itemset;
 
+   -- Deallocation procedure for Itemset_Access
+   procedure Free_Itemset is new Ada.Unchecked_Deallocation(Itemset, Itemset_Access);
+
    -- Vector types for dynamic collections
    package Item_Vectors is new Ada.Containers.Vectors(Positive, Item);
    use Item_Vectors;
