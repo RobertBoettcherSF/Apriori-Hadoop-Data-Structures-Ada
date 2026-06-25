@@ -119,7 +119,8 @@ procedure Test_Apriori is
       for C of Candidates loop Free_Itemset(C); end loop;
    end Test_Reducer_Combiner;
 
-   procedure Test_Full_Apriori is begin
+   procedure Test_Full_Apriori is
+   begin
       Put_Line("=== Test 7: Full Apriori Algorithm ===");
       Put_Line("Running complete Apriori algorithm...");
       New_Line;
