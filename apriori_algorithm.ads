@@ -10,12 +10,13 @@ package Apriori_Algorithm is
    type Item is range 1..1000;  -- Assuming a maximum of 1000 unique items
    type Itemset is array (Positive range <>) of Item;
    type Transaction is array (Positive range <>) of Item;
+   type Itemset_Access is access Itemset;
 
    -- Vector types for dynamic collections
    package Item_Vectors is new Ada.Containers.Vectors(Positive, Item);
    use Item_Vectors;
    
-   package Itemset_Vectors is new Ada.Containers.Vectors(Positive, Itemset);
+   package Itemset_Vectors is new Ada.Containers.Vectors(Positive, Itemset_Access);
    use Itemset_Vectors;
 
    -- Data structure types (private - implementation in body)

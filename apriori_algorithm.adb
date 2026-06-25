@@ -13,7 +13,7 @@ package body Apriori_Algorithm is
    begin
       -- For each transaction, generate candidate itemsets of size 1
       for I in Transaction'Range loop
-         Local_Candidates.Append(Itemset'(1 => Transaction(I)));
+         Local_Candidates.Append(new Itemset'(1 => Transaction(I)));
       end loop;
       Put_Line("Mapper: Generated " & Local_Candidates.Length'Image & " local candidates");
    end Mapper;
@@ -81,13 +81,13 @@ package body Apriori_Algorithm is
       if Current_L = 1 then
          -- Generate single items as candidates
          for I in Sample_Items'Range loop
-            Result.Append(Itemset'(1 => Sample_Items(I)));
+            Result.Append(new Itemset'(1 => Sample_Items(I)));
          end loop;
       elsif Current_L = 2 then
          -- Generate pairs of items
          for I in Sample_Items'First..Sample_Items'Last - 1 loop
             for J in I + 1..Sample_Items'Last loop
-               Result.Append(Itemset'(1 => Sample_Items(I), 2 => Sample_Items(J)));
+               Result.Append(new Itemset'(1 => Sample_Items(I), 2 => Sample_Items(J)));
             end loop;
          end loop;
       elsif Current_L = 3 then
@@ -95,7 +95,7 @@ package body Apriori_Algorithm is
          for I in Sample_Items'First..Sample_Items'Last - 2 loop
             for J in I + 1..Sample_Items'Last - 1 loop
                for K in J + 1..Sample_Items'Last loop
-                  Result.Append(Itemset'(1 => Sample_Items(I), 2 => Sample_Items(J), 3 => Sample_Items(K)));
+                  Result.Append(new Itemset'(1 => Sample_Items(I), 2 => Sample_Items(J), 3 => Sample_Items(K)));
                end loop;
             end loop;
          end loop;
