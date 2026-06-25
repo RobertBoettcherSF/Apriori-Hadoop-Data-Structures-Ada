@@ -143,7 +143,6 @@ procedure Test_Apriori is
    -- Test 5: Prune_Candidates function
    procedure Test_Prune_Candidates is
       Candidates : Itemset_Vectors.Vector;
-      Original_Length : Natural;
    begin
       Put_Line("=== Test 5: Prune_Candidates Function ===");
       
@@ -151,7 +150,6 @@ procedure Test_Apriori is
       Candidates.Append(new Itemset'(1 => 1));
       Candidates.Append(new Itemset'(1 => 2));
       Candidates.Append(new Itemset'(1 => 3));
-      Original_Length := Candidates.Length;
       
       Put_Line("Before pruning: " & Count_Type'Image(Candidates.Length) & " candidates");
       
