@@ -2,7 +2,11 @@
 -- Comprehensive test suite for Apriori algorithm implementation
 
 with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Containers; use Ada.Containers;
+with Ada.Unchecked_Deallocation;
 with Apriori_Algorithm; use Apriori_Algorithm;
+
+procedure Free is new Ada.Unchecked_Deallocation(Itemset, Itemset_Access);
 
 procedure Test_Apriori is
 
@@ -17,13 +21,13 @@ procedure Test_Apriori is
       Items.Append(1);
       Items.Append(2);
       Items.Append(3);
-      Put_Line("Item_Vectors: Added 3 items, Length = " & Items.Length'Image);
+      Put_Line("Item_Vectors: Added 3 items, Length = " & Count_Type'Image(Items.Length));
       
       -- Test Itemset_Vectors with access types
       Itemsets.Append(new Itemset'(1 => 1));
       Itemsets.Append(new Itemset'(1 => 2));
       Itemsets.Append(new Itemset'(1 => 1, 2 => 2));
-      Put_Line("Itemset_Vectors: Added 3 itemsets, Length = " & Itemsets.Length'Image);
+      Put_Line("Itemset_Vectors: Added 3 itemsets, Length = " & Count_Type'Image(Itemsets.Length));
       
       -- Clean up
       for I of Itemsets loop
@@ -40,7 +44,7 @@ procedure Test_Apriori is
       Local_Candidates : Itemset_Vectors.Vector;
    begin
       Put_Line("=== Test 2: Mapper Function ===");
-      Put_Line("Input Transaction: " & Transaction'Image);
+      Put_Line("Input Transaction: (1, 2, 3, 4)");
       
       -- Call Mapper
       Mapper(Transaction);
@@ -70,15 +74,15 @@ procedure Test_Apriori is
       
       -- Test L=1 (single items)
       Candidates_L1 := Generate_Candidates(1);
-      Put_Line("L=1: Generated " & Candidates_L1.Length'Image & " candidates");
+      Put_Line("L=1: Generated " & Count_Type'Image(Candidates_L1.Length) & " candidates");
       
       -- Test L=2 (pairs)
       Candidates_L2 := Generate_Candidates(2);
-      Put_Line("L=2: Generated " & Candidates_L2.Length'Image & " candidates");
+      Put_Line("L=2: Generated " & Count_Type'Image(Candidates_L2.Length) & " candidates");
       
       -- Test L=3 (triplets)
       Candidates_L3 := Generate_Candidates(3);
-      Put_Line("L=3: Generated " & Candidates_L3.Length'Image & " candidates");
+      Put_Line("L=3: Generated " & Count_Type'Image(Candidates_L3.Length) & " candidates");
       
       -- Verify expected counts
       -- With 10 sample items:
@@ -89,26 +93,27 @@ procedure Test_Apriori is
          Put_Line("Test 3: PASSED - All candidate counts are correct");
       else
          Put_Line("Test 3: FAILED - Expected (10, 45, 120), got (" & 
-                  Candidates_L1.Length'Image & ", " & 
-                  Candidates_L2.Length'Image & ", " & 
-                  Candidates_L3.Length'Image & ")");
+                  Count_Type'Image(Candidates_L1.Length) & ", " & 
+                  Count_Type'Image(Candidates_L2.Length) & ", " & 
+                  Count_Type'Image(Candidates_L3.Length) & ")");
       end if;
       New_Line;
       
       -- Clean up
-      declare
-         procedure Free_Vector(V : in out Itemset_Vectors.Vector) is
-         begin
-            for C of V loop
-               Free(C);
-            end loop;
-            V.Clear;
-         end Free_Vector;
-      begin
-         Free_Vector(Candidates_L1);
-         Free_Vector(Candidates_L2);
-         Free_Vector(Candidates_L3);
-      end;
+      for C of Candidates_L1 loop
+         Free(C);
+      end loop;
+      Candidates_L1.Clear;
+      
+      for C of Candidates_L2 loop
+         Free(C);
+      end loop;
+      Candidates_L2.Clear;
+      
+      for C of Candidates_L3 loop
+         Free(C);
+      end loop;
+      Candidates_L3.Clear;
    end Test_Generate_Candidates;
 
    -- Test 4: Count_Support function
@@ -124,7 +129,7 @@ procedure Test_Apriori is
       Candidates.Append(new Itemset'(1 => 1, 2 => 2));
       
       Support := Count_Support(Candidates);
-      Put_Line("Counted support for " & Candidates.Length'Image & " candidates: " & Support'Image);
+      Put_Line("Counted support for " & Count_Type'Image(Candidates.Length) & " candidates: " & Support'Image);
       Put_Line("Note: Current implementation returns count of candidates (placeholder)");
       Put_Line("Test 4: PASSED");
       New_Line;
@@ -148,12 +153,12 @@ procedure Test_Apriori is
       Candidates.Append(new Itemset'(1 => 3));
       Original_Length := Candidates.Length;
       
-      Put_Line("Before pruning: " & Candidates.Length'Image & " candidates");
+      Put_Line("Before pruning: " & Count_Type'Image(Candidates.Length) & " candidates");
       
       -- Prune with minimum support
       Prune_Candidates(Candidates, Min_Support_Threshold);
       
-      Put_Line("After pruning: " & Candidates.Length'Image & " candidates");
+      Put_Line("After pruning: " & Count_Type'Image(Candidates.Length) & " candidates");
       Put_Line("Note: Current implementation keeps all candidates (placeholder)");
       Put_Line("Test 5: PASSED");
       New_Line;
