@@ -14,7 +14,7 @@ project Apriori_Algorithm is
    for Exec_Dir use ".";
 
    -- Main source file
-   for Main use ("apriori_algorithm.adb");
+   for Main use ("main.adb");
 
    -- Compiler switches
    package Compiler is
