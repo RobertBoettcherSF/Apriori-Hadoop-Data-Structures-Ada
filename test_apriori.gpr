@@ -1,0 +1,28 @@
+-- test_apriori.gpr
+-- GNAT Project file for Apriori algorithm test suite
+
+project Test_Apriori is
+
+   -- Source directory
+   for Source_Dirs use (".");
+
+   -- Object directory
+   for Object_Dir use "obj";
+
+   -- Executable directory
+   for Exec_Dir use ".";
+
+   -- Main source file
+   for Main use ("test_apriori.adb");
+
+   -- Compiler switches
+   package Compiler is
+      for Default_Switches ("Ada") use ("-O2");
+   end Compiler;
+
+   -- Binder switches
+   package Binder is
+      for Switches ("Ada") use ("-E");
+   end Binder;
+
+end Test_Apriori;
