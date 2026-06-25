@@ -51,7 +51,7 @@ private
    end record;
    
    type LeafNode (Candidates_Length : Natural) is record
-      Candidates : array (1..Candidates_Length) of Itemset(1..10);
+      Candidates : array (1..Candidates_Length) of access Itemset;
    end record;
    
    type Hash_Tree is access InnerNode;
