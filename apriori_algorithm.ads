@@ -44,14 +44,19 @@ private
    type TrieNode;
    type HashTableTrieNode;
    
+   -- Named array types for Hash Tree
+   type InnerNode_Children is array (Positive range <>) of access InnerNode;
+   type InnerNode_Leaves is array (Positive range <>) of access LeafNode;
+   type LeafNode_Candidates is array (Positive range <>) of access Itemset;
+   
    -- Hash Tree implementation
    type InnerNode (Children_Length : Natural; Leaves_Length : Natural) is record
-      Children : array (1..Children_Length) of access InnerNode;
-      Leaves : array (1..Leaves_Length) of access LeafNode;
+      Children : InnerNode_Children(1..Children_Length);
+      Leaves : InnerNode_Leaves(1..Leaves_Length);
    end record;
    
    type LeafNode (Candidates_Length : Natural) is record
-      Candidates : array (1..Candidates_Length) of access Itemset;
+      Candidates : LeafNode_Candidates(1..Candidates_Length);
    end record;
    
    type Hash_Tree is access InnerNode;
