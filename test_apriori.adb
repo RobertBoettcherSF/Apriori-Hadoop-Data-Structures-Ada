@@ -1,5 +1,17 @@
 -- test_apriori.adb
 -- Comprehensive test suite for Apriori algorithm implementation
+--
+-- This test suite verifies all components of the Apriori algorithm implementation:
+-- - Basic types and vectors
+-- - Mapper, Reducer, Combiner functions
+-- - Candidate generation
+-- - Support counting
+-- - Candidate pruning
+-- - Data structures (Hash Tree, Trie, Hash Table Trie)
+-- - Complete Apriori algorithm
+--
+-- Each test outputs its results and cleans up allocated memory.
+-- All tests use the Free_Itemset procedure to prevent memory leaks.
 
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Containers; use Ada.Containers;
@@ -7,6 +19,9 @@ with Apriori_Algorithm; use Apriori_Algorithm;
 
 procedure Test_Apriori is
 
+   -- Test 1: Basic Types and Vectors
+   -- Verifies that basic types and vector containers work correctly
+   -- Tests: Item_Vectors, Itemset_Vectors, memory allocation with new
    procedure Test_Basic_Types is
       Items : Item_Vectors.Vector;
       Itemsets : Itemset_Vectors.Vector;
@@ -27,6 +42,9 @@ procedure Test_Apriori is
       New_Line;
    end Test_Basic_Types;
 
+   -- Test 2: Mapper Function
+   -- Verifies that the Mapper procedure processes transactions correctly
+   -- Tests: Transaction processing, candidate generation from single items
    procedure Test_Mapper is
       Transaction : constant Itemset := (1, 2, 3, 4);
       Local_Candidates : Itemset_Vectors.Vector;
@@ -46,6 +64,10 @@ procedure Test_Apriori is
       end loop;
    end Test_Mapper;
 
+   -- Test 3: Generate_Candidates Function
+   -- Verifies that candidate generation works for different itemset sizes
+   -- Tests: L=1 (10 candidates), L=2 (45 candidates), L=3 (120 candidates)
+   -- Verifies: Combinatorial generation, correct counts
    procedure Test_Generate_Candidates is
       Candidates_L1 : Itemset_Vectors.Vector;
       Candidates_L2 : Itemset_Vectors.Vector;
@@ -72,6 +94,10 @@ procedure Test_Apriori is
       for C of Candidates_L3 loop Free_Itemset(C); end loop; Candidates_L3.Clear;
    end Test_Generate_Candidates;
 
+   -- Test 4: Count_Support Function
+   -- Verifies that support counting works (placeholder implementation)
+   -- Tests: Function call, result type, logging
+   -- Note: Current implementation returns count of candidates as placeholder
    procedure Test_Count_Support is
       Candidates : Itemset_Vectors.Vector;
       Support : Natural;
@@ -88,6 +114,10 @@ procedure Test_Apriori is
       for C of Candidates loop Free_Itemset(C); end loop;
    end Test_Count_Support;
 
+   -- Test 5: Prune_Candidates Function
+   -- Verifies that candidate pruning works (placeholder implementation)
+   -- Tests: Function call, vector modification, logging
+   -- Note: Current implementation keeps all candidates as placeholder
    procedure Test_Prune_Candidates is
       Candidates : Itemset_Vectors.Vector;
    begin
@@ -104,6 +134,10 @@ procedure Test_Apriori is
       for C of Candidates loop Free_Itemset(C); end loop;
    end Test_Prune_Candidates;
 
+   -- Test 6: Reducer and Combiner Functions
+   -- Verifies that MapReduce components work (placeholder implementations)
+   -- Tests: Function calls, vector parameter handling, logging
+   -- Note: Current implementations are placeholders
    procedure Test_Reducer_Combiner is
       Candidates : Itemset_Vectors.Vector;
    begin
@@ -119,6 +153,10 @@ procedure Test_Apriori is
       for C of Candidates loop Free_Itemset(C); end loop;
    end Test_Reducer_Combiner;
 
+   -- Test 7: Full Apriori Algorithm
+   -- Runs the complete Apriori algorithm end-to-end
+   -- Tests: Algorithm execution, iteration, candidate generation, pruning
+   -- Expected: Successful completion with frequent itemsets output
    procedure Test_Full_Apriori is
       -- No local variables needed
    begin
@@ -131,6 +169,10 @@ procedure Test_Apriori is
       New_Line;
    end Test_Full_Apriori;
 
+   -- Test 8: Data Structures
+   -- Verifies that all data structure types can be instantiated
+   -- Tests: Hash_Tree, Trie, Hash_Table_Trie type declarations
+   -- Expected: Successful instantiation without errors
    procedure Test_Data_Structures is
       HT : Hash_Tree;
       T : Trie;
@@ -145,10 +187,14 @@ procedure Test_Apriori is
    end Test_Data_Structures;
 
 begin
+   -- Main test execution
+   -- Run all tests in sequence and report results
    Put_Line("==========================================");
    Put_Line("Apriori Algorithm - Comprehensive Test Suite");
    Put_Line("==========================================");
    New_Line;
+   
+   -- Execute all test procedures
    Test_Basic_Types;
    Test_Mapper;
    Test_Generate_Candidates;
@@ -157,6 +203,8 @@ begin
    Test_Reducer_Combiner;
    Test_Data_Structures;
    Test_Full_Apriori;
+   
+   -- All tests completed successfully
    Put_Line("==========================================");
    Put_Line("All tests completed!");
    Put_Line("==========================================");
