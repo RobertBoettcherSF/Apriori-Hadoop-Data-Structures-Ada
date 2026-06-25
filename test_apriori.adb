@@ -125,7 +125,7 @@ procedure Test_Apriori is
       Put_Line("=== Test 7: Full Apriori Algorithm ===");
       Put_Line("Running complete Apriori algorithm...");
       New_Line;
-      Apriori_Algorithm;
+      Apriori_Algorithm.Apriori_Algorithm;
       New_Line;
       Put_Line("Test 7: PASSED");
       New_Line;
