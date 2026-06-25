@@ -1,0 +1,33 @@
+-- apriori_algorithm.gpr
+-- Version: 0.01
+-- GNAT Project file for Apriori algorithm implementation
+
+project Apriori_Algorithm is
+
+   -- Source directory
+   for Source_Dirs use (".");
+
+   -- Object directory
+   for Object_Dir use "obj";
+
+   -- Executable directory
+   for Exec_Dir use ".";
+
+   -- Main source file
+   for Main use ("apriori_algorithm.adb");
+
+   -- Compiler switches
+   package Compiler is
+      for Default_Switches ("Ada") use ("-O2");
+   end Compiler;
+
+   -- Binder switches
+   package Binder is
+      for Switches ("Ada") use ("-E");
+   end Binder;
+
+   -- Dependencies (if any)
+   -- with "data_structures.gpr";
+   -- with "mapreduce_framework.gpr";
+
+end Apriori_Algorithm;
