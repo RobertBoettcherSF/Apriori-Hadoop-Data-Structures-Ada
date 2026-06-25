@@ -120,6 +120,7 @@ procedure Test_Apriori is
    end Test_Reducer_Combiner;
 
    procedure Test_Full_Apriori is
+      -- No local variables needed
    begin
       Put_Line("=== Test 7: Full Apriori Algorithm ===");
       Put_Line("Running complete Apriori algorithm...");
