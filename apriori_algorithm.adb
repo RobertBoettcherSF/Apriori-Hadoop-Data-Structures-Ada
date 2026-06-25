@@ -3,8 +3,12 @@
 -- Implementation of Apriori algorithm with hash tree, trie, and hash table trie
 
 with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Unchecked_Deallocation;
 
 package body Apriori_Algorithm is
+
+   -- Deallocation procedure for Itemset_Access
+   procedure Free_Itemset is new Ada.Unchecked_Deallocation(Itemset, Itemset_Access);
 
    -- Mapper and Reducer for MapReduce framework
    procedure Mapper (Transaction : Itemset) is
